@@ -1,0 +1,62 @@
+.beatsMenu {
+  border-radius: 10px;
+  background: #666;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+}
+
+.beatsMenu .display {
+  justify-content: center;
+  text-align: center;
+}
+
+.beatsMenu .players {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  flex-grow: 1;
+}
+
+.beatsMenu .players .player {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.beatsMenu .players .playerImage {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50px;
+}
+
+.beatsMenu .players .playerImage, .beatsMenu .players .playerName {
+  text-align: center;
+}
+
+.beatsMenu .players .noPlayers {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+}
+
+.beatsMenu .footer {
+  display: flex;
+  flex-direction: row;
+  background: #555;
+}
+
+.form-group.addBeats {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.form-group.addBeats input {
+  margin-left: 10px;
+  max-width: 50px;
+}

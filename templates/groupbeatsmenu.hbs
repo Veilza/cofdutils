@@ -1,0 +1,28 @@
+<form class="beatsMenu">
+	<div class="display"> 
+		Current number is beats is {{currentBeats}}
+	</div>
+	<div class="players"> 
+		{{#if activePlayers.length}}
+			{{#each activePlayers as |player key|}}
+				<div class="player">
+					<div class="playerImage">
+						<img src="{{player.img}}"/>
+					</div>
+					<div class="playerName">
+						{{player.name}}
+					</div>
+				</div>
+			{{/each}}
+		{{else}}
+			<div class="noPlayers">
+				No players set. Drag an actor onto this window to add them!
+			</div>
+		{{/if}}
+	</div>
+	<div class="footer">
+		<button id="addBeats" class="addBeats" type="button">Add Beats</button>
+		<button id="distributeBeats" class="distributeBeats" type="button">Distribute Beats</button>
+		<button id="dropBeats" class="dropBeats" type="button">Drop Beats</button>
+	</div>
+</form>

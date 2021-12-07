@@ -1,0 +1,37 @@
+{
+  "name": "cofdutils",
+  "title": "CofD Utilities",
+  "description": "Utilities and add-ons for the Chronicles of Darkness 2e system.",
+  "version": "0.1.0",
+  "minimumCoreVersion": "0.7.0",
+  "compatibleCoreVersion": "0.8.9",
+  "systems": ["mta"],
+  "esmodules": [
+    "./module/cofdutils.js"
+  ],
+  "styles": [
+    "./styles/cofdutils.css"
+  ],
+  "url": "https://github.com/thalissa/cofdutils",
+  "manifest": "/module.json",
+  "download": "/.zip?job=pack",
+  "changelog": "https://github.com/thalissa/cofdutils/blob/main/CHANGELOG.md",
+  "readme": "https://github.com/thalissa/cofdutils/blob/main/README.md",
+  "license": "https://github.com/thalissa/cofdutils/blob/main/LICENSE",
+  "author": "Thalissa",
+  "authors": [
+    {
+      "name": "Thalissa",
+      "twitter": "ThalissaRemnant",
+      "discord": "Amelia#1897",
+      "ko-fi": "thalissa"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ]
+}
