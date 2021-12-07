@@ -13,8 +13,8 @@
     "./styles/cofdutils.css"
   ],
   "url": "https://github.com/thalissa/cofdutils",
-  "manifest": "/module.json",
-  "download": "/.zip?job=pack",
+  "manifest": "https://github.com/thalissa/cofdutils/releases/download/0.1.0/module.json",
+  "download": "https://github.com/thalissa/cofdutils/releases/download/0.1.0/cofdutils.zip?job=pack",
   "changelog": "https://github.com/thalissa/cofdutils/blob/main/CHANGELOG.md",
   "readme": "https://github.com/thalissa/cofdutils/blob/main/README.md",
   "license": "https://github.com/thalissa/cofdutils/blob/main/LICENSE",
