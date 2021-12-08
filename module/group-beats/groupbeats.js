@@ -6,7 +6,7 @@ export class GroupBeats extends FormApplication {
       title: "Group Beats Menu",
       id: "groupbeats",
       template: "modules/cofdutils/templates/groupbeatsmenu.hbs",
-      width: 450,
+      width: 500,
       height: 200,
       resizable: true,
       minimizable: true,
@@ -19,16 +19,16 @@ export class GroupBeats extends FormApplication {
   }
   
   // Set initial data for the template
-  constructor(exampleOption) {
+  constructor() {
     super()
-    this.currentBeats = game.settings.get("cofdutils", "currentBeats")
-    this.activePlayers = game.settings.get("cofdutils", "activePlayers")
+    this.currentBeats = game.settings.get("cofdutils", "groupbeats-currentBeats")
+    this.activePlayers = game.settings.get("cofdutils", "groupbeats-activePlayers")
   }
   
   // Send data to the template
   getData() {
     // Remove actors that have been deleted
-    this.activePlayers.forEach(actor => {
+    this.activePlayers.forEach(actor => {      
       this.isActorAlive(actor.id)
     })
     
@@ -39,7 +39,7 @@ export class GroupBeats extends FormApplication {
   }
 
   // When the form is updated, re-render the template
-  async _updateObject(event, formData) {    
+  async _updateObject(event, formData) {
     this.render()
   }
   
@@ -51,8 +51,10 @@ export class GroupBeats extends FormApplication {
     html.find(".addBeats").click(this.newBeatsDialogue.bind(this))
     html.find(".distributeBeats").click(this._distributeBeats.bind(this))
     html.find(".dropBeats").click(this._dropTheBeats.bind(this))
+    html.find(".dropActors").click(this._dropActors.bind(this))
   }
   
+  // Response to an actor being dropped onto the beats menu
   _onDrop(event) {
     let data
     try {
@@ -68,8 +70,69 @@ export class GroupBeats extends FormApplication {
     }
   }
   
+  // Function to update the beats setting
+  updateBeats(newBeats, replace) {
+    // Only go forward if the newBeats are a number
+    if(typeof newBeats === "number"){
+      if(replace){
+        // Replace the current number of beats with the given amount
+        
+        // Update the game settings and the beatsMenu data, then re-render
+        game.settings.set("cofdutils", "groupbeats-currentBeats", newBeats)
+        this.currentBeats = newBeats
+        this.render(true)
+      } else {
+        // Otherwise, just add the new beats in
+        
+        // Define variables
+        let currentBeats = this.currentBeats
+        let newBeatsTotal = currentBeats + newBeats
+        
+        // Update the game settings and the beatsMenu data, then re-render
+        game.settings.set("cofdutils", "groupbeats-currentBeats", newBeatsTotal)
+        this.currentBeats = newBeatsTotal
+        this.render(true)
+      }
+    }
+  }
+  
+  // Function to update the actors setting
+  updateActors(operation, newData) {
+    // Switch case to determine what to do with the data    
+    switch(operation){
+      // Clear the list
+      case "clear":
+        // Setting the length to 0 is a simple and effective way to clear it
+        this.activePlayers.length = 0
+        
+        break
+        
+      // Append new actors to the list
+      case "add":
+        // Push actor to the list
+        this.activePlayers.push(newData)
+        
+        break
+      
+      // Wholly replace the previous list with the new data
+      case "replace":
+        // Fill in the list with the new data
+        this.activePlayers = newData
+        
+        break
+      default:
+        console.log("CofDUtils BeatsMenu: No operation specified when updating actors.")
+    }
+    
+    // Update the game settings with the updated list
+    game.settings.set("cofdutils", "groupbeats-activePlayers", this.activePlayers)
+    // Re-render the page
+    this.render(true)
+  }
+  
+  // Adding new beats function
   newBeatsDialogue(){
-      // Generate a new dialogue to select an attribute
+      // Generate a new dialogue to input the number of beats
       let d = new Dialog({
        title: `Input Number of Beats`,
        content: `
@@ -86,18 +149,14 @@ export class GroupBeats extends FormApplication {
            icon: '<i class="fas fa-check"></i>',
            label: "Add Beats",
            callback: (html) => {           
-             // Define various variables
-             let newBeats = html.find('#newBeats')[0].value
-             let currentBeats = game.settings.get("cofdutils", "currentBeats")
-             let newBeatsTotal = Number(currentBeats) + Number(newBeats) // Force these two to be numbers since it matters for math
-             let message = "Added " + newBeats + " new story beats to the group pool. New total: " + newBeatsTotal
+             // Define the new number of beats, and force it to be a number
+             let newBeats = Number(html.find('#newBeats')[0].value)
              
              // Set the new number of beats in the module
-             game.settings.set("cofdutils", "currentBeats", newBeatsTotal)
-             this.currentBeats = newBeatsTotal
+             this.updateBeats(newBeats)
              
-             // Re-render the page
-             this.render(true)
+             // Define the chat message to output
+             let message = "Added " + newBeats + " new story beats to the group pool. New total: " + this.currentBeats
                
              // Generate a chat message to notify everyone that story beats have been added
              ChatMessage.create({
@@ -116,6 +175,7 @@ export class GroupBeats extends FormApplication {
        default: "cancel"
       })
       
+      // Render the dialogue
       d.render(true)
     }
   
@@ -157,11 +217,7 @@ export class GroupBeats extends FormApplication {
         })
         
         // Set the new number of beats to the remainder
-        game.settings.set("cofdutils", "currentBeats", remainderBeats)
-        this.currentBeats = remainderBeats
-        
-        // Re-render the page
-        this.render(true)
+        this.updateBeats(remainderBeats, true)
         
         // Wrap up crafting the chat message
         msg = msg.substring(0, msg.length-2)
@@ -177,18 +233,14 @@ export class GroupBeats extends FormApplication {
       }
     }
     
-    // Set the number of grroup beats to 0.
+    // Set the number of grroup beats to 0
     _dropTheBeats(){    
       let message = "Beats have been dropped! Set new total to 0."
       
-      // Set the new number of beats in the module
-      game.settings.set("cofdutils", "currentBeats", 0)
-      this.currentBeats = 0
-      
-      // Re-render the page
-      this.render(true)
+      // Set the number of beats to 0
+      this.updateBeats(0, true)
 
-      // generate a chat message to notify everyone that story beats have been added
+      // Generate a chat message to notify everyone that story beats have been added
       ChatMessage.create({
         content: message,
         speaker: {
@@ -197,8 +249,17 @@ export class GroupBeats extends FormApplication {
       }, {})
     }
     
+    // Simple binding function to clear the actors list
+    _dropActors(){
+      this.updateActors("clear")
+    }
+    
+    // Get the actor sheet via ID
     getActorSheet(id){
+      // Search through the game for the sheet
       let sheetID = Object.keys(game.actors.contents).find(sheet => game.actors.contents[sheet].id === id)
+      
+      // Send the actor sheet back
       return game.actors.contents[sheetID]
     }
     
@@ -239,13 +300,8 @@ export class GroupBeats extends FormApplication {
       
       // If the actor exists and is unique
       if (actor.entity && (!actorUniqueCheck)) {
-        // Push actor to the list
-        this.activePlayers.push(actor.data)
-        // Update the game settings with the updated list
-        game.settings.set("cofdutils", "activePlayers", this.activePlayers)
-        
-        // Re-render the page
-        this.render(true)
+        // Push to the players list
+        this.updateActors("add", actor.data)
       }
     }
     
@@ -261,12 +317,9 @@ export class GroupBeats extends FormApplication {
       
       // Actor is dead, rewrite some variables
       let newPlayersList = this.activePlayers.filter((players) => players.id !== id)
-      // Update the game settings with the updated list
-      this.activePlayers = newPlayersList
-      game.settings.set("cofdutils", "activePlayers", newPlayersList)
       
-      // Re-render the page
-      this.render(true)
+      // Update players list
+      this.updateActors("replace", newPlayersList)
       
       // Continue
       return false

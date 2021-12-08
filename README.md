@@ -8,6 +8,9 @@ If you'd like to follow my [Twitter](https://twitter.com/ThalissaRemnant), I ret
 Those that assist in contributing to the project will be listed here! Though I expect no help, if anyone provides any assistance I'll be more than happy to pull code in.
 
 ### Changelog
+#### 0.1.1
+* Reworked some functions and cleaned various bits of code up, plus tweaked setting names for futureproofing.
+
 #### 0.1.0
 * Initial commit! Group Beats menu is there, and working, but localization isn't and things still need to be cleaned up.
 

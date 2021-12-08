@@ -3,7 +3,7 @@ import { GroupBeats } from './group-beats/groupbeats.js'
 // Register module settings
 Hooks.on("ready", () => {
   // For storing the current number of beats
-  game.settings.register("cofdutils", "currentBeats", {
+  game.settings.register("cofdutils", "groupbeats-currentBeats", {
     name: "Current Beats",
     scope: "world",
     config: false,
@@ -11,7 +11,7 @@ Hooks.on("ready", () => {
     type: Number
   })
   // For storing the players list
-  game.settings.register("cofdutils", "activePlayers", {
+  game.settings.register("cofdutils", "groupbeats-activePlayers", {
     name: "Players",
     scope: "world",
     config: false,
