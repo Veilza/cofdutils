@@ -1,4 +1,8 @@
+// GroupBeats module constructor
 import { GroupBeats } from './group-beats/groupbeats.js'
+
+// Combat Selector module
+import('./combat-selector/combatselector.js')
 
 // Register module settings
 Hooks.on("ready", () => {
@@ -18,10 +22,26 @@ Hooks.on("ready", () => {
     default: [],
     type: Array
   })
+  // For storing the targeting defense penalty
+  game.settings.register("cofdutils", "combatselector-penalty", {
+    name: "Defense Penalty",
+    scope: "client",
+    config: false,
+    default: 0,
+    type: Number
+  })
+  // Automatically remove targeted actor's defense from combat rolls
+  game.settings.register("cofdutils", "combatselector-automatedDefense", {
+    name: "Automatic Defense",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean
+  })
 })
 
 // Generate the button(s)
-Hooks.on("getSceneControlButtons", (controls) => {
+Hooks.on("getSceneControlButtons", (controls) => {  
   // Simple way to locate the token controls
   let tokenControls = controls.find(c => c.name === "token" )
   

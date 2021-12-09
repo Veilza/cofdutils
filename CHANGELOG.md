@@ -1,3 +1,6 @@
+#### 0.1.3
+* Added a new module: Combat Selector, which will automatically subtract a selected token's defense to a weapon's roll when the dialogue is brought up.
+
 #### 0.1.2
 * Localization added! Now all the pieces of the menu pull from the language file, which can be expanded later to include other languages.
 
