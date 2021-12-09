@@ -1,3 +1,20 @@
 {
-  "cofdutils.test": "Test"
+  "CofD.GroupBeatsMenu.alias": "Group Beats",
+  "CofD.GroupBeatsMenu.title": "Input Number of Beats",
+  "CofD.GroupBeatsMenu.currentBeats": "Current number is beats is",
+  "CofD.GroupBeatsMenu.noPlayersSet": "No players set. Drag an actor onto this window to add them!",
+  "CofD.GroupBeatsMenu.newBeats": "New Beats",
+  "CofD.GroupBeatsMenu.addBeats": "Add Beats",
+  "CofD.GroupBeatsMenu.distributeBeats": "Distribute Beats",
+  "CofD.GroupBeatsMenu.dropBeats": "Drop Beats",
+  "CofD.GroupBeatsMenu.dropActors": "Drop Actors",
+  "CofD.GroupBeatsMenu.cancel": "Cancel",
+  
+  "CofD.GroupBeatsMenu.Message.dropBeats": "Beats have been dropped! Set new total to 0.",
+  "CofD.GroupBeatsMenu.Message.beatsAwarded": "beats awarded to each player!",
+  "CofD.GroupBeatsMenu.Message.recipients": "Recipients",
+  "CofD.GroupBeatsMenu.Message.added": "Added",
+  "CofD.GroupBeatsMenu.Message.newBeats": "new story beats to the group pool. New total:",
+  
+  "CofD.Error.noOperationSpecified": "No operation specified when updating actors."
 }

@@ -121,7 +121,7 @@ export class GroupBeats extends FormApplication {
         
         break
       default:
-        console.log("CofDUtils BeatsMenu: No operation specified when updating actors.")
+        console.log(`CofDUtils BeatsMenu: ${game.i18n.localize("CofD.Error.noOperationSpecified")}`)
     }
     
     // Update the game settings with the updated list
@@ -134,12 +134,12 @@ export class GroupBeats extends FormApplication {
   newBeatsDialogue(){
       // Generate a new dialogue to input the number of beats
       let d = new Dialog({
-       title: `Input Number of Beats`,
+       title: game.i18n.localize("CofD.GroupBeatsMenu.title"),
        content: `
         <form>
           <div class="form-group addBeats">
             <div>
-              <label>New Beats</label>
+              <label>${game.i18n.localize("CofD.GroupBeatsMenu.newBeats")}</label>
               <input type="number" id="newBeats"/>
             </div>
           </div>
@@ -147,7 +147,7 @@ export class GroupBeats extends FormApplication {
        buttons: {
          select: {
            icon: '<i class="fas fa-check"></i>',
-           label: "Add Beats",
+           label: `${game.i18n.localize("CofD.GroupBeatsMenu.addBeats")}`,
            callback: (html) => {           
              // Define the new number of beats, and force it to be a number
              let newBeats = Number(html.find('#newBeats')[0].value)
@@ -156,20 +156,20 @@ export class GroupBeats extends FormApplication {
              this.updateBeats(newBeats)
              
              // Define the chat message to output
-             let message = "Added " + newBeats + " new story beats to the group pool. New total: " + this.currentBeats
+             let message = `${game.i18n.localize("CofD.GroupBeatsMenu.Message.added")} ${newBeats} ${game.i18n.localize("CofD.GroupBeatsMenu.Message.newBeats")} ${this.currentBeats}`
                
              // Generate a chat message to notify everyone that story beats have been added
              ChatMessage.create({
                content: message,
                speaker: {
-                 alias: "Group Beats"
+                 alias: game.i18n.localize("CofD.GroupBeatsMenu.alias")
                }
              }, {})
            }
          },
          cancel: {
            icon: '<i class="fas fa-times"></i>',
-           label: "Cancel"
+           label: game.i18n.localize("CofD.GroupBeatsMenu.cancel")
          }
        },
        default: "cancel"
@@ -191,8 +191,8 @@ export class GroupBeats extends FormApplication {
         
         // Start of a chat message for awarding beats.
         let msg = `
-          <b>${beatsPerPlayer} beats awarded to each player!</b> 
-          <br>Recipients: 
+          <b>${beatsPerPlayer} ${game.i18n.localize("CofD.GroupBeatsMenu.Message.beatsAwarded")}</b> 
+          <br>${game.i18n.localize("CofD.GroupBeatsMenu.Message.recipients")}: 
         `
             
         actors.forEach(actor => 
@@ -227,7 +227,7 @@ export class GroupBeats extends FormApplication {
         ChatMessage.create({
           content: msg,
           speaker: {
-            alias: "Group Beats"
+            alias: game.i18n.localize("CofD.GroupBeatsMenu.alias")
           }
         }, {})
       }
@@ -235,7 +235,7 @@ export class GroupBeats extends FormApplication {
     
     // Set the number of grroup beats to 0
     _dropTheBeats(){    
-      let message = "Beats have been dropped! Set new total to 0."
+      let message = game.i18n.localize("CofD.GroupBeatsMenu.Message.dropBeats")
       
       // Set the number of beats to 0
       this.updateBeats(0, true)
@@ -244,7 +244,7 @@ export class GroupBeats extends FormApplication {
       ChatMessage.create({
         content: message,
         speaker: {
-          alias: "Group Beats"
+          alias: game.i18n.localize("CofD.GroupBeatsMenu.alias")
         }
       }, {})
     }

@@ -1,6 +1,6 @@
 <form class="beatsMenu">
 	<div class="display"> 
-		Current number is beats is {{currentBeats}}
+		{{ localize "CofD.GroupBeatsMenu.currentBeats" }} {{currentBeats}}
 	</div>
 	<div class="players"> 
 		{{#if activePlayers.length}}
@@ -16,14 +16,14 @@
 			{{/each}}
 		{{else}}
 			<div class="noPlayers">
-				No players set. Drag an actor onto this window to add them!
+				{{ localize "CofD.GroupBeatsMenu.noPlayersSet" }}
 			</div>
 		{{/if}}
 	</div>
 	<div class="footer">
-		<button id="addBeats" class="addBeats" type="button">Add Beats</button>
-		<button id="distributeBeats" class="distributeBeats" type="button">Distribute Beats</button>
-		<button id="dropBeats" class="dropBeats" type="button">Drop Beats</button>
-		<button id="dropActors" class="dropActors" type="button">Drop Actors</button>
+		<button id="addBeats" class="addBeats" type="button">{{ localize "CofD.GroupBeatsMenu.addBeats" }}</button>
+		<button id="distributeBeats" class="distributeBeats" type="button">{{ localize "CofD.GroupBeatsMenu.distributeBeats" }}</button>
+		<button id="dropBeats" class="dropBeats" type="button">{{ localize "CofD.GroupBeatsMenu.dropBeats" }}</button>
+		<button id="dropActors" class="dropActors" type="button">{{ localize "CofD.GroupBeatsMenu.dropActors" }}</button>
 	</div>
 </form>
