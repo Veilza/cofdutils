@@ -17,7 +17,7 @@ Hooks.on("renderApplication", (app, html, data) => {
     // Check the game settings if the penalty should be applied automatically
     if(game.settings.get("cofdutils", "combatselector-automatedDefense")){
       // Grab the currently selected token's defense, reverse it, and then add it to the existing bonus/penalty.
-      let targetedDefense = ~Number(game.settings.get("cofdutils", "combatselector-penalty"))
+      let targetedDefense = -Math.abs(game.settings.get("cofdutils", "combatselector-penalty"))
       let totalPenalty = targetedDefense + data.bonusDice
       
       // Change the input field on the weapon dialogue
