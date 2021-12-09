@@ -1,3 +1,6 @@
+#### 0.1.4
+* Quick fix for applying automated defense to the weapon's dicepool.
+
 #### 0.1.3
 * Added a new module: Combat Selector, which will automatically subtract a selected token's defense to a weapon's roll when the dialogue is brought up.
 
