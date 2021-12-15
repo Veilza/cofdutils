@@ -1,14 +1,14 @@
-export class GroupBeats extends FormApplication {
+export class BeatsMenu extends FormApplication {
   // Modify the defaults
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["form"],
-      title: "Group Beats Menu",
-      id: "groupbeats",
-      template: "modules/cofdutils/templates/groupbeatsmenu.hbs",
+      title: "Beats Menu",
+      id: "beatsmenu",
+      template: "modules/cofdutils/templates/beatsmenu.hbs",
       width: 500,
-      height: 200,
-      resizable: true,
+      height: 205,
+      resizable: false,
       minimizable: true,
       closeOnSubmit: false,
       tabs: [{
@@ -26,8 +26,8 @@ export class GroupBeats extends FormApplication {
   // Set initial data for the template
   constructor() {
     super()
-    this.currentBeats = game.settings.get("cofdutils", "groupbeats-currentBeats")
-    this.activePlayers = game.settings.get("cofdutils", "groupbeats-activePlayers")
+    this.currentBeats = game.settings.get("cofdutils", "beatsmenu-currentBeats")
+    this.activePlayers = game.settings.get("cofdutils", "beatsmenu-activePlayers")
   }
   
   // Send data to the template
@@ -46,7 +46,7 @@ export class GroupBeats extends FormApplication {
                 
         // Push only the data we need and format it nicely for Handlebar rendering
         data.playerList.push({
-          id: player.data.id,
+          id: player.id,
           img: player.data.img,
           name: player.data.name,
           beats: (player.data.data.beats % 5),
@@ -72,7 +72,7 @@ export class GroupBeats extends FormApplication {
     html.find(".distributeBeats").click(this._distributeBeats.bind(this))
     html.find(".dropBeats").click(this._dropTheBeats.bind(this))
     html.find(".dropActors").click(this._dropActors.bind(this))
-    html.find(".playerImage").click(this._setSelected.bind(this))
+    html.find(".player").click(this._givePlayerBeats.bind(this))
   }
   
   // Response to an actor being dropped onto the beats menu
@@ -100,7 +100,7 @@ export class GroupBeats extends FormApplication {
         // Replace the current number of beats with the given amount
         
         // Update the game settings and the beatsMenu data, then re-render
-        game.settings.set("cofdutils", "groupbeats-currentBeats", newBeats)
+        game.settings.set("cofdutils", "beatsmenu-currentBeats", newBeats)
         this.currentBeats = newBeats
       } else {
         // Otherwise, just add the new beats in
@@ -110,7 +110,7 @@ export class GroupBeats extends FormApplication {
         const newBeatsTotal = currentBeats + newBeats
         
         // Update the game settings and the beatsMenu data, then re-render
-        game.settings.set("cofdutils", "groupbeats-currentBeats", newBeatsTotal)
+        game.settings.set("cofdutils", "beatsmenu-currentBeats", newBeatsTotal)
         this.currentBeats = newBeatsTotal
       }
       
@@ -147,7 +147,7 @@ export class GroupBeats extends FormApplication {
     }
     
     // Update the game settings with the updated list
-    game.settings.set("cofdutils", "groupbeats-activePlayers", this.activePlayers)
+    game.settings.set("cofdutils", "beatsmenu-activePlayers", this.activePlayers)
     // Re-render the page
     this.render()
   }
@@ -156,12 +156,12 @@ export class GroupBeats extends FormApplication {
   newBeatsDialogue(){
       // Generate a new dialogue to input the number of beats
       let d = new Dialog({
-       title: game.i18n.localize("CofD.GroupBeatsMenu.title"),
+       title: game.i18n.localize("CofD.BeatsMenu.title"),
        content: `
         <form>
           <div class="form-group addBeats">
             <div>
-              <label>${game.i18n.localize("CofD.GroupBeatsMenu.newBeats")}</label>
+              <label>${game.i18n.localize("CofD.BeatsMenu.newBeats")}</label>
               <input type="number" id="newBeats"/>
             </div>
           </div>
@@ -169,8 +169,8 @@ export class GroupBeats extends FormApplication {
        buttons: {
          select: {
            icon: '<i class="fas fa-check"></i>',
-           label: `${game.i18n.localize("CofD.GroupBeatsMenu.addBeats")}`,
-           callback: (html) => {           
+           label: `${game.i18n.localize("CofD.BeatsMenu.addBeats")}`,
+           callback: (html) => {
              // Define the new number of beats, and force it to be a number
              const newBeats = Number(html.find('#newBeats')[0].value)
              
@@ -178,20 +178,20 @@ export class GroupBeats extends FormApplication {
              this.updateBeats(newBeats)
              
              // Define the chat message to output
-             const message = `${game.i18n.localize("CofD.GroupBeatsMenu.Message.added")} ${newBeats} ${game.i18n.localize("CofD.GroupBeatsMenu.Message.newBeats")} ${this.currentBeats}`
+             const message = `${game.i18n.localize("CofD.BeatsMenu.Message.added")} ${newBeats} ${game.i18n.localize("CofD.BeatsMenu.Message.newBeats")} ${this.currentBeats}`
                
              // Generate a chat message to notify everyone that story beats have been added
              ChatMessage.create({
                content: message,
                speaker: {
-                 alias: game.i18n.localize("CofD.GroupBeatsMenu.alias")
+                 alias: game.i18n.localize("CofD.BeatsMenu.alias")
                }
              }, {})
            }
          },
          cancel: {
            icon: '<i class="fas fa-times"></i>',
-           label: game.i18n.localize("CofD.GroupBeatsMenu.cancel")
+           label: game.i18n.localize("CofD.BeatsMenu.cancel")
          }
        },
        default: "cancel"
@@ -213,8 +213,8 @@ export class GroupBeats extends FormApplication {
         
         // Start of a chat message for awarding beats.
         let msg = `
-          <b>${beatsPerPlayer} ${game.i18n.localize("CofD.GroupBeatsMenu.Message.beatsAwarded")}</b> 
-          <br>${game.i18n.localize("CofD.GroupBeatsMenu.Message.recipients")}: 
+          <b>${beatsPerPlayer} ${game.i18n.localize("CofD.BeatsMenu.Message.beatsAwarded")}</b> 
+          <br>${game.i18n.localize("CofD.BeatsMenu.Message.recipients")}: 
         `
         
         // Promise chain to keep everything in sane order
@@ -259,7 +259,7 @@ export class GroupBeats extends FormApplication {
           ChatMessage.create({
             content: msg,
             speaker: {
-              alias: game.i18n.localize("CofD.GroupBeatsMenu.alias")
+              alias: game.i18n.localize("CofD.BeatsMenu.alias")
             }
           }, {})
           
@@ -277,7 +277,7 @@ export class GroupBeats extends FormApplication {
     
     // Set the number of grroup beats to 0
     _dropTheBeats(){    
-      const message = game.i18n.localize("CofD.GroupBeatsMenu.Message.dropBeats")
+      const message = game.i18n.localize("CofD.BeatsMenu.Message.dropBeats")
       
       // Set the number of beats to 0
       this.updateBeats(0, true)
@@ -286,7 +286,7 @@ export class GroupBeats extends FormApplication {
       ChatMessage.create({
         content: message,
         speaker: {
-          alias: game.i18n.localize("CofD.GroupBeatsMenu.alias")
+          alias: game.i18n.localize("CofD.BeatsMenu.alias")
         }
       }, {})
     }
@@ -297,9 +297,61 @@ export class GroupBeats extends FormApplication {
     }
     
     // When a player icon is clicked, open up the player edit menu
-    _setSelected(player) {
+    _givePlayerBeats(player) {
       // Get ID of the player clicked
-      const playerID = player.target.id
+      const actorID = player.currentTarget.id
+      const actor = game.actors.get(actorID)
+      const actorName = actor.data.name
+      
+      // Generate a new dialogue to input the number of beats
+      let d = new Dialog({
+       title: `${game.i18n.localize("CofD.BeatsMenu.awardSoloBeatsTitle")} ${actorName}`,
+       content: `
+        <form>
+          <div class="form-group addBeats">
+            <div>
+              <label>${game.i18n.localize("CofD.BeatsMenu.newBeats")}</label>
+              <input type="number" id="newBeats"/>
+            </div>
+          </div>
+        </form>`,
+       buttons: {
+         select: {
+           icon: '<i class="fas fa-check"></i>',
+           label: `${game.i18n.localize("CofD.BeatsMenu.awardSoloBeats")}`,
+           callback: (html) => {
+             // Define the new number of beats, and force it to be a number
+             const newBeats = Number(html.find('#newBeats')[0].value)
+             const playerOldBeats = actor.data.data.beats
+             const playerNewBeats = Number(playerOldBeats) + Number(newBeats)
+             
+             // Set the new number of beats in the actor's sheet
+             
+             // Update the beats in the actor's sheet
+             game.actors.get(actorID).update({"data.beats": playerNewBeats})
+             
+             // Define the chat message to output
+             const message = `${actorName} ${game.i18n.localize("CofD.BeatsMenu.Message.soloBeats1")} ${newBeats} ${game.i18n.localize("CofD.BeatsMenu.Message.soloBeats2")}`
+               
+             // Generate a chat message to notify everyone that story beats have been added
+             ChatMessage.create({
+               content: message,
+               speaker: {
+                 alias: game.i18n.localize("CofD.BeatsMenu.alias")
+               }
+             }, {})
+           }
+         },
+         cancel: {
+           icon: '<i class="fas fa-times"></i>',
+           label: game.i18n.localize("CofD.BeatsMenu.cancel")
+         }
+       },
+       default: "cancel"
+      })
+      
+      // Render the dialogue
+      d.render(true)
     }
     
     // Add a new actor to the active players list

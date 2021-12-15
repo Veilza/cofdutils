@@ -1,5 +1,5 @@
 // GroupBeats module constructor
-import { GroupBeats } from './group-beats/groupbeats.js'
+import { BeatsMenu } from './beats-menu/beatsmenu.js'
 
 // Combat Selector module
 import('./combat-selector/combatselector.js')
@@ -7,7 +7,7 @@ import('./combat-selector/combatselector.js')
 // Register module settings
 Hooks.on("ready", () => {
   // For storing the current number of beats
-  game.settings.register("cofdutils", "groupbeats-currentBeats", {
+  game.settings.register("cofdutils", "beatsmenu-currentBeats", {
     name: "Current Beats",
     scope: "world",
     config: false,
@@ -15,7 +15,7 @@ Hooks.on("ready", () => {
     type: Number
   })
   // For storing the players list
-  game.settings.register("cofdutils", "groupbeats-activePlayers", {
+  game.settings.register("cofdutils", "beatsmenu-activePlayers", {
     name: "Players",
     scope: "world",
     config: false,
@@ -49,11 +49,11 @@ Hooks.on("getSceneControlButtons", (controls) => {
   if(tokenControls && tokenControls.hasOwnProperty('tools')){
     tokenControls.tools.push({
       name: "beats",
-      title: "Group Beats",
+      title: game.i18n.localize("CofD.BeatsMenu.alias"),
       icon: "fas fa-book",
       button: true,
       visible: game.user.isGM, // Only show this button to the GM
-      onClick: () => new GroupBeats().render(true) // Function to pop the beats menu up
+      onClick: () => new BeatsMenu().render(true) // Function to pop the beats menu up
     })
   }
 })
@@ -62,12 +62,12 @@ Hooks.on("getSceneControlButtons", (controls) => {
 Hooks.on("updateActor", (actor) => {
   // Some variables
   const actorID = actor.id
-  const activePlayers = game.settings.get("cofdutils", "groupbeats-activePlayers")
+  const activePlayers = game.settings.get("cofdutils", "beatsmenu-activePlayers")
   
   // If the actor is in the active players list...
   if(activePlayers.find(players => players == actorID)){
         
     // Re-render the GroupBeats menu
-    Object.values(ui.windows).find(windows => windows.id == "groupbeats").render()
+    Object.values(ui.windows).find(windows => windows.id == "beatsmenu").render()
   }
 })

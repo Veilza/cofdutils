@@ -1,3 +1,8 @@
+#### 1.0.0
+* Added the ability to give beats to individual actors from the menu
+* Re-defined the "group beats menu" to just the "beats menu," since its purpose is now overview and general management.
+* Since it's refined enough and in working order, I'm going to consider this the official version 1! Woo.
+
 #### 0.1.5
 * Updated the Beats Menu display, now displaying Beats/XP and updating when the actors on the list update!
 * A bunch of code restructuring/fixes and cleaned up the way I get the actor sheets.
