@@ -1,4 +1,6 @@
 {
+  "CofD.GroupBeatsMenu.PlayersTab": "Players",
+  "CofD.GroupBeatsMenu.ManagementTab": "Manage Beats",
   "CofD.GroupBeatsMenu.alias": "Group Beats",
   "CofD.GroupBeatsMenu.title": "Input Number of Beats",
   "CofD.GroupBeatsMenu.currentBeats": "Current number is beats is",

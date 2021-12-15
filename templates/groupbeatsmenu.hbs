@@ -1,29 +1,50 @@
 <form class="beatsMenu">
-	<div class="display"> 
-		{{ localize "CofD.GroupBeatsMenu.currentBeats" }} {{currentBeats}}
-	</div>
-	<div class="players"> 
-		{{#if activePlayers.length}}
-			{{#each activePlayers as |player key|}}
-				<div class="player">
-					<div class="playerImage">
-						<img src="{{player.img}}"/>
+	{{!-- Sheet Tab Navigation --}}
+	<nav class="sheet-tabs tabs" data-group="primary">
+		<a class="item" data-tab="players">{{ localize "CofD.GroupBeatsMenu.PlayersTab" }}</a>
+		<a class="item" data-tab="management">{{ localize "CofD.GroupBeatsMenu.ManagementTab" }}</a>
+	</nav>
+	
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
+		<hr/>
+		{{!-- Players Tab --}}
+		<div class="tab playersTab" data-group="primary" data-tab="players">
+			<div class="players">
+				{{#if playerList.length}}
+					{{#each playerList as |player key|}}
+						<div id="{{player.id}}" class="player">
+							<div class="playerName">
+								{{player.name}}
+							</div>
+							<div class="playerImage">
+								<img src="{{player.img}}"/>
+							</div>
+							<div class="beatsDisplay">
+								<div class="beats">Beats: {{player.beats}}</div>
+								<div class="xp">XP: {{player.xp}}</div>
+							</div>
+						</div>
+					{{/each}}
+				{{else}}
+					<div class="noPlayers">
+						{{ localize "CofD.GroupBeatsMenu.noPlayersSet" }}
 					</div>
-					<div class="playerName">
-						{{player.name}}
-					</div>
-				</div>
-			{{/each}}
-		{{else}}
-			<div class="noPlayers">
-				{{ localize "CofD.GroupBeatsMenu.noPlayersSet" }}
+				{{/if}}
 			</div>
-		{{/if}}
-	</div>
-	<div class="footer">
-		<button id="addBeats" class="addBeats" type="button">{{ localize "CofD.GroupBeatsMenu.addBeats" }}</button>
-		<button id="distributeBeats" class="distributeBeats" type="button">{{ localize "CofD.GroupBeatsMenu.distributeBeats" }}</button>
-		<button id="dropBeats" class="dropBeats" type="button">{{ localize "CofD.GroupBeatsMenu.dropBeats" }}</button>
-		<button id="dropActors" class="dropActors" type="button">{{ localize "CofD.GroupBeatsMenu.dropActors" }}</button>
-	</div>
+		</div>
+		
+		{{!-- Management Tab --}}
+		<div class="tab managementTab" data-group="primary" data-tab="management">
+			<div class="display"> 
+				{{ localize "CofD.GroupBeatsMenu.currentBeats" }} {{currentBeats}}
+			</div>
+			<div class="footer">
+				<button id="addBeats" class="addBeats" type="button">{{ localize "CofD.GroupBeatsMenu.addBeats" }}</button>
+				<button id="distributeBeats" class="distributeBeats" type="button">{{ localize "CofD.GroupBeatsMenu.distributeBeats" }}</button>
+				<button id="dropBeats" class="dropBeats" type="button">{{ localize "CofD.GroupBeatsMenu.dropBeats" }}</button>
+				<button id="dropActors" class="dropActors" type="button">{{ localize "CofD.GroupBeatsMenu.dropActors" }}</button>
+			</div>
+		</div>
+	</section>
 </form>

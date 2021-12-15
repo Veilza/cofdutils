@@ -8,6 +8,12 @@ If you'd like to follow my [Twitter](https://twitter.com/ThalissaRemnant), I ret
 Those that assist in contributing to the project will be listed here! Though I expect no help, if anyone provides any assistance I'll be more than happy to pull code in.
 
 ### Changelog
+#### 0.1.5
+* Updated the Beats Menu display, now displaying Beats/XP and updating when the actors on the list update!
+* A bunch of code restructuring/fixes and cleaned up the way I get the actor sheets.
+* Changed a bunch of lets to consts because some variables were never changed.
+* Fix for how the Combat Selector displayed the dice mods.
+
 #### 0.1.4
 * Quick fix for applying automated defense to the weapon's dicepool.
 

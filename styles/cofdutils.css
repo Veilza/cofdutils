@@ -1,5 +1,4 @@
 .beatsMenu {
-  border-radius: 10px;
   background: #666;
   padding: 3px;
   display: flex;
@@ -9,6 +8,7 @@
 .beatsMenu .display {
   justify-content: center;
   text-align: center;
+  height: 75px;
 }
 
 .beatsMenu .players {
@@ -36,6 +36,10 @@
 
 .beatsMenu .players .playerImage, .beatsMenu .players .playerName {
   text-align: center;
+  max-width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .beatsMenu .players .noPlayers {
@@ -59,4 +63,10 @@
 .form-group.addBeats input {
   margin-left: 10px;
   max-width: 50px;
+}
+
+.playersTab .beatsDisplay {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }

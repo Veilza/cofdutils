@@ -57,3 +57,17 @@ Hooks.on("getSceneControlButtons", (controls) => {
     })
   }
 })
+
+// Handle actor updates
+Hooks.on("updateActor", (actor) => {
+  // Some variables
+  const actorID = actor.id
+  const activePlayers = game.settings.get("cofdutils", "groupbeats-activePlayers")
+  
+  // If the actor is in the active players list...
+  if(activePlayers.find(players => players == actorID)){
+        
+    // Re-render the GroupBeats menu
+    Object.values(ui.windows).find(windows => windows.id == "groupbeats").render()
+  }
+})
