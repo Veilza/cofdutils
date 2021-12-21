@@ -10,8 +10,6 @@ Those that assist in contributing to the project will be listed here! Though I e
 ### Changelog
 #### 1.1.0
 * Added a new module: Scene Notes! This allows a storyteller to keep track of their scenes, actors within that scene, journal entries important to that scene, and general descriptions without having to fuss with their endless list of journal entries or with making full maps.
-* Double clicking on the actor portrait in the Beats Menu will now open up the actor's sheet.
-* All the actors in the Beats Menu will now take up the same amount of space, even if one of them has a really long name.
 * Minor cleanup fixes to the Beats Menu.
 * Added a description and translation lines for the Automatic Defense toggle setting.
 * V9 Compatible confirmed!
