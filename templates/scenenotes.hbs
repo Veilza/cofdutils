@@ -1,0 +1,100 @@
+<form class="mta-sheet sceneNotes">
+	{{!-- Sidebar --}}
+	<div class="sidebar">
+		<div class="head">{{ localize "CofD.SceneNotes.scene" }}</div>
+		<div class="scenes">
+			{{#if activeScene}}
+				{{#each scenes as |scene key|}}
+					<div class="scene" id="{{scene.id}}">{{scene.name}}</div>
+				{{/each}}
+			{{/if}}
+		</div>
+		<div class="newScene" id="newScene">{{ localize "CofD.SceneNotes.newScene"}}</div>
+	</div>
+	</div>
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
+		{{#if activeScene}}
+			<div class="header">
+				<div class="sceneTitle">{{activeSceneData.name}}</div>
+				<i class="editTitle fas fa-pencil-alt" title="Edit Scene Title" id="editSceneName"></i>
+				<i class="deleteScene fas fa-trash" title="Delete Scene" id="deleteScene"></i>
+			</div>
+
+			<div class="description sceneInfo">
+				<div class="sectionTitle">{{ localize "CofD.SceneNotes.descriptionTitle" }}</div>
+				<div class="sectionBody">
+					{{editor content=activeSceneData.formData.description target="description" button=true owner=owner editable=true}}
+				</div>
+			</div>
+
+			<div class="actors sceneInfo">
+				<div class="sectionTitle">{{ localize "CofD.SceneNotes.actorsTitle" }}</div>
+				<div class="sectionBody actorsList styled">
+					{{#if actors.length}}
+						{{#each actors as |actor key|}}
+							<div id="{{actor.id}}" class="actor" title="{{ localize "CofD.SceneNotes.actorHover" }}">
+								<div class="actorName">
+									{{actor.name}}
+								</div>
+								<div class="actorImage">
+									<img src="{{actor.img}}"/>
+								</div>
+							</div>
+						{{/each}}
+					{{else}}
+						<div class="noActors">
+							{{ localize "CofD.SceneNotes.noActors" }}
+						</div>
+					{{/if}}
+				</div>
+			</div>
+
+			<div class="journals sceneInfo">
+				<div class="sectionTitle">{{ localize "CofD.SceneNotes.journalsTitle" }}</div>
+				<div class="sectionBody journalsList styled">
+					{{#if journals.length}}
+						{{#each journals as |journal key|}}
+							<div id="{{journal.id}}" class="journal" title="{{ localize "CofD.SceneNotes.journalHover" }}">
+								<div class="journalImage">
+									<img src="{{journal.img}}"/>
+								</div>
+								<div class="journalName">
+									{{journal.name}}
+								</div>
+							</div>
+						{{/each}}
+					{{else}}
+						<div class="noJournals">
+							{{ localize "CofD.SceneNotes.noJournals" }}
+						</div>
+					{{/if}}
+				</div>
+			</div>
+
+			<div class="items sceneInfo">
+				<div class="sectionTitle">{{ localize "CofD.SceneNotes.itemsTitle" }}</div>
+				<div class="sectionBody journalsList styled">
+					{{#if items.length}}
+						{{#each items as |item key|}}
+							<div id="{{item.id}}" class="item" title="{{ localize "CofD.SceneNotes.itemHover" }}">
+								<div class="itemImage">
+									<img src="{{item.img}}"/>
+								</div>
+								<div class="journalName">
+									{{item.name}}
+								</div>
+							</div>
+						{{/each}}
+					{{else}}
+						<div class="noItems">
+							{{ localize "CofD.SceneNotes.noItems" }}
+						</div>
+					{{/if}}
+				</div>
+			</div>
+		{{else}}
+			<div class="noScene">{{ localize "CofD.SceneNotes.noScene" }}</div>
+		{{/if}}
+	</section>
+</form>

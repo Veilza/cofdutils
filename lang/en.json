@@ -1,4 +1,11 @@
 {
+  "CofD.submit": "Submit",
+  "CofD.cancel": "Cancel",
+  "CofD.confirm": "Confirm",
+
+  "CofD.Settings.AutomaticDefense.Name": "Combat Selector",
+  "CofD.Settings.AutomaticDefense.Description": "Automatically deduct a targeted token's defense from weapon rolls.",
+
   "CofD.BeatsMenu.PlayersTab": "Players",
   "CofD.BeatsMenu.ManagementTab": "Manage Group Beats",
   "CofD.BeatsMenu.alias": "Beats Menu",
@@ -10,10 +17,10 @@
   "CofD.BeatsMenu.distributeBeats": "Distribute Beats",
   "CofD.BeatsMenu.dropBeats": "Drop Beats",
   "CofD.BeatsMenu.dropActors": "Drop Actors",
-  "CofD.BeatsMenu.cancel": "Cancel",
   "CofD.BeatsMenu.awardSoloBeatsTitle": "Awarding Beats to",
   "CofD.BeatsMenu.awardSoloBeats": "Award Beats",
-  
+  "CofD.BeatsMenu.playerHover": "Click to add beats to a specific actor, right click to remove the actor from this list",
+
   "CofD.BeatsMenu.Message.dropBeats": "Beats have been dropped! Set new total to 0.",
   "CofD.BeatsMenu.Message.beatsAwarded": "beats awarded to each player!",
   "CofD.BeatsMenu.Message.recipients": "Recipients",
@@ -21,6 +28,25 @@
   "CofD.BeatsMenu.Message.newBeats": "new story beats to the group pool. New total:",
   "CofD.BeatsMenu.Message.soloBeats1": "has been awarded",
   "CofD.BeatsMenu.Message.soloBeats2": "beats.",
-  
+
+  "CofD.SceneNotes.alias": "Scene Notes",
+  "CofD.SceneNotes.scene": "Scene",
+  "CofD.SceneNotes.newScene": "New Scene",
+  "CofD.SceneNotes.editNameDesc": "Choose a new name for the scene",
+  "CofD.SceneNotes.descriptionTitle": "Scene Description",
+  "CofD.SceneNotes.actorsTitle": "Actors in Scene",
+  "CofD.SceneNotes.journalsTitle": "Journal Entries",
+  "CofD.SceneNotes.itemsTitle": "Items in Scene",
+  "CofD.SceneNotes.editNameTitle": "Editing Scene Name: ",
+  "CofD.SceneNotes.noActors": "No actors in this scene. Drag an actor onto this window to add them!",
+  "CofD.SceneNotes.noJournals": "No journal entries in this scene. Drag a journal onto this window to add it!",
+  "CofD.SceneNotes.noItems": "No items in this scene. Drag an item onto this window to add it!",
+  "CofD.SceneNotes.deleteSceneTitle": "Deleting Scene: ",
+  "CofD.SceneNotes.deleteSceneDesc": "Are you sure you want to delete this scene? You will not be able to recover the scene itself, but all actors, journals and items in the world will remain in the world.",
+  "CofD.SceneNotes.actorHover": "Left click to open the actor's sheet, right click to remove the actor",
+  "CofD.SceneNotes.journalHover": "Left click to open the journal entry, right click to remove the journal",
+  "CofD.SceneNotes.itemHover": "Left click to open the item, right click to remove the item",
+  "CofD.SceneNotes.noScene": "No scene selected. Open a new scene on the left to get started!",
+
   "CofD.Error.noOperationSpecified": "No operation specified when updating actors."
 }

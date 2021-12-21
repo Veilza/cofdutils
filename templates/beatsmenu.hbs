@@ -1,19 +1,18 @@
-<form class="beatsMenu">
+<form class="mta-sheet beatsMenu">
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
 		<a class="item" data-tab="players">{{ localize "CofD.BeatsMenu.PlayersTab" }}</a>
 		<a class="item" data-tab="management">{{ localize "CofD.BeatsMenu.ManagementTab" }}</a>
 	</nav>
-	
+
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
-		<hr/>
 		{{!-- Players Tab --}}
 		<div class="tab playersTab" data-group="primary" data-tab="players">
 			<div class="players">
 				{{#if playerList.length}}
 					{{#each playerList as |player key|}}
-						<div id="{{player.id}}" class="player">
+						<div id="{{player.id}}" class="player" title="{{ localize "CofD.BeatsMenu.playerHover" }}">
 							<div class="playerName">
 								{{player.name}}
 							</div>
@@ -33,10 +32,10 @@
 				{{/if}}
 			</div>
 		</div>
-		
+
 		{{!-- Management Tab --}}
 		<div class="tab managementTab" data-group="primary" data-tab="management">
-			<div class="display"> 
+			<div class="display">
 				{{ localize "CofD.BeatsMenu.currentBeats" }} {{currentBeats}}
 			</div>
 			<div class="footer">

@@ -1,72 +1,146 @@
 .beatsMenu {
-  background: #666;
-  padding: 3px;
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
-
+.beatsMenu nav.sheet-tabs, .sceneNotes nav.sheet-tabs {
+	height: 2rem;
+	flex: 0 0 2rem;
+}
 .beatsMenu .display {
-  justify-content: center;
-  text-align: center;
-  height: 75px;
+	justify-content: center;
+	text-align: center;
+	height: 75px;
 }
-
-.beatsMenu .players {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  flex-grow: 1;
+.beatsMenu .players, .sceneNotes .actorsList, .sceneNotes .journalsList, .sceneNotes .itemsList {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	flex-grow: 1;
 }
-
-.beatsMenu .players .player {
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
+.beatsMenu .players .player, .sceneNotes .actor, .sceneNotes .journal, .sceneNotes .item {
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	margin-right: auto;
 }
-
-.beatsMenu .players .playerImage {
-  margin-left: auto;
-  margin-right: auto;
-  width: 50px;
+.beatsMenu .players .playerImage, .sceneNotes .actorImage, .sceneNotes .journalImage, .sceneNotes .itemImage {
+	margin-left: auto;
+	margin-right: auto;
+	width: 50px;
 }
-
-.beatsMenu .players .playerImage, .beatsMenu .players .playerName {
-  text-align: center;
-  max-width: 100px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.beatsMenu .players .playerImage, .beatsMenu .players .playerName, .sceneNotes .actorName, .sceneNotes .journalName, .sceneNotes .itemName {
+	text-align: center;
+	max-width: 100px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
-
-.beatsMenu .players .noPlayers {
-  width: 100%;
-  height: 50px;
-  text-align: center;
+.beatsMenu .players .noPlayers, .sceneNotes .noActors, .sceneNotes .noJournals, .sceneNotes .noItems {
+	width: 100%;
+	height: 50px;
+	text-align: center;
 }
-
 .beatsMenu .footer {
-  display: flex;
-  flex-direction: row;
-  background: #555;
+	display: flex;
+	flex-direction: row;
+	background: #555;
 }
-
 .form-group.addBeats {
-  display: flex;
-  flex-direction: row;
-  text-align: center;
+	display: flex;
+	flex-direction: row;
+	text-align: center;
 }
-
 .form-group.addBeats input {
-  margin-left: 10px;
-  max-width: 50px;
+	margin-left: 10px;
+	max-width: 50px;
 }
-
 .playersTab .beatsDisplay {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+.sceneNotes {
+	display: flex;
+	flex-direction: row;
+	overflow-x: hidden;
+}
+.sceneNotes .journalImage img, .sceneNotes .itemImage img {
+	width: 25px;
+	height: 25px;
+	margin: auto;
+  display: block;
+}
+.sceneNotes .sceneTitle {
+	text-decoration: underline;
+	font-size: 24px;
+}
+.sceneNotes .sidebar {
+	width: 150px;
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.sceneNotes .sidebar .head {
+	text-align: center;
+	text-decoration: underline;
+	font-size: 16px;
+}
+.sceneNotes .sidebar .scene {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.sceneNotes .sidebar .scene, .sceneNotes .sidebar .newScene {
+	cursor: pointer;
+	margin-top: 5px;
+}
+.sceneNotes .sidebar .newScene {
+	text-align: center;
+}
+.sceneNotes .sidebar .scene:hover, .sceneNotes .sidebar .newScene:hover {
+	font-weight: 1000;
+}
+.sceneNotes .sheet-body {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+.sceneNotes .description {
+	display: flex;
+	flex-direction: column;
+}
+.sceneNotes textarea {
+	resize: vertical;
+}
+.sceneNotes .header .sectionTitle {
+	font-size: 16px;
+}
+.sceneNotes .header {
+	display: flex;
+	flex-direction: row;
+}
+.sceneNotes .header .editTitle, .sceneNotes .header .deleteScene {
+	padding: 6px;
+	cursor: pointer;
+}
+.sceneNotes .sceneInfo {
+	margin-bottom: 10px;
+}
+.sceneNotes .editor, .sceneNotes .editor-content {
+	min-height: 100px !important;
+}
+.sceneNotes .sectionBody.styled {
+	background: linear-gradient(#0f171ad4, #0f171ad4) repeat;
+	border: 2px ridge #3c3d41;
+	padding: 8px;
+}
+.sceneNotes .actorsList .actor, .beatsMenu .players .player, .sceneNotes .journalsList .journal, .sceneNotes .items .item {
+	cursor: pointer;
 }
