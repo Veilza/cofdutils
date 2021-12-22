@@ -1,3 +1,7 @@
+#### 1.1.1
+* Quality of life fix for editing scene names in Scene Notes, now pressing enter will default to submit rather than cancel
+* Fixed the Scene Notes sidebar getting too small when a too long description was added.
+
 #### 1.1.0
 * Added a new module: Scene Notes! This allows a storyteller to keep track of their scenes, actors within that scene, journal entries important to that scene, and general descriptions without having to fuss with their endless list of journal entries or with making full maps.
 * Minor cleanup fixes to the Beats Menu.
