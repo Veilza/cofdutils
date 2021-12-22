@@ -224,7 +224,7 @@ export class SceneNotes extends FormApplication {
          label: game.i18n.localize("CofD.cancel")
        }
      },
-     default: "cancel"
+     default: "submit"
     })
 
     // Render the dialogue
