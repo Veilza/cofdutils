@@ -65,7 +65,6 @@
 .sceneNotes {
 	display: flex;
 	flex-direction: row;
-	overflow-x: hidden;
 }
 .sceneNotes .journalImage img, .sceneNotes .itemImage img {
 	width: 25px;
@@ -109,9 +108,7 @@
 	font-weight: 1000;
 }
 .sceneNotes .sheet-body {
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
+	flex: 1;
 }
 .sceneNotes .description {
 	display: flex;

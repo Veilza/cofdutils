@@ -13,16 +13,20 @@ Hooks.on("targetToken", (user, token, targeted) => {
 Hooks.on("renderApplication", (app, html, data) => {
   // Get the text and check it for the weapon dicepools
   const textCheck = html[0].innerText
+
   if(textCheck.includes("Strength + Brawl") || textCheck.includes("Strength + Weaponry") || textCheck.includes("Dexterity + Athletics")){
-    // Check the game settings if the penalty should be applied automatically
-    if(game.settings.get("cofdutils", "combatselector-automatedDefense")){
-      // Grab the currently selected token's defense, reverse it, and then add it to the existing bonus/penalty.
-      const targetedDefense = -Math.abs(game.settings.get("cofdutils", "combatselector-penalty"))
-      const totalPenalty = Number(targetedDefense) + Number(data.bonusDice)
-      
-      // Change the input field on the weapon dialogue
-      html.find("input[name='dicePoolBonus']").attr("value", totalPenalty)
-      html.find(".niceNumber .theNumber span:first").text(totalPenalty)
+    const combatSelectorPenalty = -Math.abs(game.settings.get("cofdutils", "combatselector-penalty"))
+
+    if(combatSelectorPenalty > 0){
+      // Check the game settings if the penalty should be applied automatically
+      if(game.settings.get("cofdutils", "combatselector-automatedDefense")){
+        // Grab the currently selected token's defense, reverse it, and then add it to the existing bonus/penalty.
+        const totalPenalty = Number(combatSelectorPenalty) + Number(data.bonusDice)
+
+        // Change the input field on the weapon dialogue
+        html.find("input[name='dicePoolBonus']").attr("value", totalPenalty)
+        html.find(".niceNumber .theNumber span:first").text(totalPenalty)
+      }
     }
   }
 })

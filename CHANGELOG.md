@@ -1,3 +1,7 @@
+#### 1.1.2
+* Style fix for Scene Notes cutting off the "items" section if the window was too small.
+* Update to the Combat Selector to prevent a console error from popping up.
+
 #### 1.1.1
 * Quality of life fix for editing scene names in Scene Notes, now pressing enter will default to submit rather than cancel
 * Fixed the Scene Notes sidebar getting too small when a too long description was added.
