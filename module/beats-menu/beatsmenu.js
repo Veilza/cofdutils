@@ -44,14 +44,30 @@ export class BeatsMenu extends FormApplication {
         if(this.isActorAlive(actorID)){
           // Get the actor's sheet
           const player = game.actors.get(actorID)
+          
+          // Get the current number of beats by adding up the initial
+          // amount and combining it with the progress overall
+          const currentBeats = [{
+            name: "INITIAL",
+            beats: player.data.data.beats + (5 * player.data.data.experience)
+          }].concat(player.data.data.progress)
+
+          // Define current number of beats via their progress
+          const beats = currentBeats.reduce((acc, cur) => {
+            if (cur && cur.beats) {
+              return acc + cur.beats;
+            } else {
+              return acc
+            }
+          }, 0)
 
           // Push only the data we need and format it nicely for Handlebar rendering
           data.playerList.push({
             id: player.id,
             img: player.data.img,
             name: player.data.name,
-            beats: (player.data.data.beats % 5),
-            xp: ~~(player.data.data.beats/5)
+            beats: (beats % 5),
+            xp: Math.floor(beats / 5)
           })
         }
       })
@@ -229,15 +245,20 @@ export class BeatsMenu extends FormApplication {
             // cause an error
             if(this.isActorAlive(actorID)){
               // Define variables for updating the beats
-              // Player/Actor stuff
               const playerSheet = game.actors.get(actorID)
-
-              // Beat numbers
-              const playerOldBeats = playerSheet.data.data.beats
-              const playerNewBeats = Number(playerOldBeats) + Number(beatsPerPlayer)
-
-              // Update the beats in the actor's sheet
-              game.actors.get(actorID).update({"data.beats": playerNewBeats})
+              let progress = playerSheet.data.data.progress ? duplicate(playerSheet.data.data.progress) : []
+ 
+              // Push new data to the current
+              progress.push({
+                name: game.i18n.localize("CofD.BeatsMenu.newBeatsDefaultReason"),
+                beats: beatsPerPlayer,
+                arcaneBeats: 0
+              })
+ 
+              // Update the progress data with the new information
+              playerSheet.update({
+                'data.progress': progress
+              })
 
               // Add each actor's name to the chat message
               msg += `${game.actors.get(actorID).data.name}, `
@@ -313,7 +334,11 @@ export class BeatsMenu extends FormApplication {
        content: `
         <form>
           <div class="form-group addBeats">
-            <div>
+            <div class="addBeatsRow">
+              <label>${game.i18n.localize("CofD.BeatsMenu.newBeatsReason")}</label>
+              <input type="text" id="newBeatsReason" value="${game.i18n.localize("CofD.BeatsMenu.newBeatsDefaultReason")}" placeholder="${game.i18n.localize("CofD.BeatsMenu.newBeatsDefaultReason")}"/>
+            </div>
+            <div class="addBeatsRow">
               <label>${game.i18n.localize("CofD.BeatsMenu.newBeats")}</label>
               <input type="number" id="newBeats"/>
             </div>
@@ -324,15 +349,25 @@ export class BeatsMenu extends FormApplication {
            icon: '<i class="fas fa-check"></i>',
            label: `${game.i18n.localize("CofD.BeatsMenu.awardSoloBeats")}`,
            callback: (html) => {
-             // Define the new number of beats, and force it to be a number
+             // Define the input variables
              const newBeats = Number(html.find('#newBeats')[0].value)
-             const playerOldBeats = actor.data.data.beats
-             const playerNewBeats = Number(playerOldBeats) + Number(newBeats)
+             const newBeatsReason = html.find('#newBeatsReason')[0].value || game.i18n.localize("CofD.BeatsMenu.newBeatsDefaultReason")
 
-             // Set the new number of beats in the actor's sheet
+             // Define actor variables
+             const actor = game.actors.get(actorID)
+             let progress = actor.data.data.progress ? duplicate(actor.data.data.progress) : []
 
-             // Update the beats in the actor's sheet
-             game.actors.get(actorID).update({"data.beats": playerNewBeats})
+             // Push new data to the current
+             progress.push({
+               name: newBeatsReason,
+               beats: newBeats,
+               arcaneBeats: 0
+             })
+
+             // Update the progress data with the new information
+             actor.update({
+               'data.progress': progress
+             })
 
              // Define the chat message to output
              const message = `${actorName} ${game.i18n.localize("CofD.BeatsMenu.Message.soloBeats1")} ${newBeats} ${game.i18n.localize("CofD.BeatsMenu.Message.soloBeats2")}`

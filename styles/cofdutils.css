@@ -53,9 +53,12 @@
 	flex-direction: row;
 	text-align: center;
 }
+.form-group.addBeats .addBeatsRow {
+	flex-direction: row;
+}
 .form-group.addBeats input {
 	margin-left: 10px;
-	max-width: 50px;
+	max-width: 100px;
 }
 .playersTab .beatsDisplay {
 	display: flex;

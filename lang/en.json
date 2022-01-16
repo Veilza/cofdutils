@@ -13,6 +13,8 @@
   "CofD.BeatsMenu.currentBeats": "Current number is beats is",
   "CofD.BeatsMenu.noPlayersSet": "No players set. Drag an actor onto this window to add them!",
   "CofD.BeatsMenu.newBeats": "New Beats",
+  "CofD.BeatsMenu.newBeatsReason": "Reason",
+  "CofD.BeatsMenu.newBeatsDefaultReason": "Storyteller Award",
   "CofD.BeatsMenu.addBeats": "Add Beats",
   "CofD.BeatsMenu.distributeBeats": "Distribute Beats",
   "CofD.BeatsMenu.dropBeats": "Drop Beats",
