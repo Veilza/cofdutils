@@ -1,3 +1,6 @@
+#### 1.1.3
+* Update to the beats menu; now tracks beats via progress instead of by the "beats" number in the actor and allows the storyteller to input a reason for the beats if they're adding them per-player.
+
 #### 1.1.2
 * Style fix for Scene Notes cutting off the "items" section if the window was too small.
 * Update to the Combat Selector to prevent a console error from popping up.
