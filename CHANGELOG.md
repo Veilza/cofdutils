@@ -1,3 +1,6 @@
+#### 1.1.4
+* Fix for a rare beakage in the Scene Notes.
+
 #### 1.1.3
 * Update to the beats menu; now tracks beats via progress instead of by the "beats" number in the actor and allows the storyteller to input a reason for the beats if they're adding them per-player.
 

@@ -8,6 +8,9 @@ If you'd like to follow my [Twitter](https://twitter.com/ThalissaRemnant), I ret
 Those that assist in contributing to the project will be listed here! Though I expect no help, if anyone provides any assistance I'll be more than happy to pull code in.
 
 ### Changelog
+#### 1.1.4
+* Fix for a rare beakage in the Scene Notes.
+
 #### 1.1.3
 * Update to the beats menu; now tracks beats via progress instead of by the "beats" number in the actor and allows the storyteller to input a reason for the beats if they're adding them per-player.
 
@@ -24,10 +27,5 @@ Those that assist in contributing to the project will be listed here! Though I e
 * Minor cleanup fixes to the Beats Menu.
 * Added a description and translation lines for the Automatic Defense toggle setting.
 * V9 Compatible confirmed!
-
-#### 1.0.0
-* Added the ability to give beats to individual actors from the menu
-* Re-defined the "group beats menu" to just the "beats menu," since its purpose is now overview and general management.
-* Since it's refined enough and in working order, I'm going to consider this the official version 1! Woo.
 
 For additional changelog notes, see [CHANGELOG.md](https://github.com/thalissa/cofdutils/blob/main/CHANGELOG.md)

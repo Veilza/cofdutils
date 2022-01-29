@@ -29,7 +29,7 @@ export class SceneNotes extends FormApplication {
 
   // Send data to the template
   getData() {
-    if(this.activeScene){
+    if(this.activeScene && this.data.scenes.find(scene => scene.id == this.activeScene)){
       const scene = this.data.scenes.find(scene => scene.id == this.activeScene)
 
       const data = {
@@ -45,14 +45,18 @@ export class SceneNotes extends FormApplication {
       if(scene.actors){
         scene.actors.forEach(actorID => {
           // Get the actor's sheet
-          const player = game.actors.get(actorID)
+          if(game.actors.get(actorID)){
+            const player = game.actors.get(actorID)
 
-          // Push only the data we need and format it nicely for Handlebar rendering
-          data.actors.push({
-            id: player.id,
-            img: player.data.img,
-            name: player.data.name
-          })
+            // Push only the data we need and format it nicely for Handlebar rendering
+            data.actors.push({
+              id: player.id,
+              img: player.data.img,
+              name: player.data.name
+            })
+          } else {
+            this._removeActor({ currentTarget: { id: actorID } })
+          }
         })
       }
 
@@ -60,14 +64,18 @@ export class SceneNotes extends FormApplication {
       if(scene.journals){
         scene.journals.forEach(journalID => {
           // Get the actor's sheet
-          const journal = game.journal.get(journalID)
-
-          // Push only the data we need and format it nicely for Handlebar rendering
-          data.journals.push({
-            id: journal.id,
-            img: "/icons/svg/book.svg",
-            name: journal.data.name
-          })
+          if(game.journal.get(journalID)){
+            const journal = game.journal.get(journalID)
+  
+            // Push only the data we need and format it nicely for Handlebar rendering
+            data.journals.push({
+              id: journal.id,
+              img: "/icons/svg/book.svg",
+              name: journal.data.name
+            })
+          } else {
+            this._removeJournal({ currentTarget: { id: journalID } })
+          }
         })
       }
 
@@ -75,14 +83,18 @@ export class SceneNotes extends FormApplication {
       if(scene.items){
         scene.items.forEach(itemID => {
           // Get the actor's sheet
-          const item = game.items.get(itemID)
-
-          // Push only the data we need and format it nicely for Handlebar rendering
-          data.items.push({
-            id: item.id,
-            img: item.data.img,
-            name: item.data.name
-          })
+          if(game.items.get(itemID)){
+            const item = game.items.get(itemID)
+  
+            // Push only the data we need and format it nicely for Handlebar rendering
+            data.items.push({
+              id: item.id,
+              img: item.data.img,
+              name: item.data.name
+            })
+          } else {
+            this._removeItem({ currentTarget: { id: itemID } })
+          }
         })
       }
 
