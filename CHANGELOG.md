@@ -1,3 +1,8 @@
+#### 2.0.0
+* Update to be compatible with Version 11 of Foundry
+* Transfer of ownership from [Thalissa](https://github.com/thalissa) to [Veilza](https://github.com/veilza)
+* Combat Selector depricated due to it being merged into the MTA system
+
 #### 1.1.4
 * Fix for a rare beakage in the Scene Notes.
 

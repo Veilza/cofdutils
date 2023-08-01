@@ -4,9 +4,6 @@ import { BeatsMenu } from './beats-menu/beatsmenu.js'
 // SceneNotes module constructor
 import { SceneNotes } from './scene-notes/scenenotes.js'
 
-// Combat Selector module
-import('./combat-selector/combatselector.js')
-
 // Register module settings
 Hooks.on("ready", () => {
   // For storing the current number of beats
@@ -24,24 +21,6 @@ Hooks.on("ready", () => {
     config: false,
     default: [],
     type: Array
-  })
-  // For storing the targeting defense penalty
-  game.settings.register("cofdutils", "combatselector-penalty", {
-    name: "Defense Penalty",
-    scope: "client",
-    config: false,
-    default: 0,
-    type: Number
-  })
-  // Whether to automatically remove targeted actor's defense from combat rolls
-  // GM can disable/enable this as they like
-  game.settings.register("cofdutils", "combatselector-automatedDefense", {
-    name: game.i18n.localize("CofD.Settings.AutomaticDefense.Name"),
-    hint: game.i18n.localize("CofD.Settings.AutomaticDefense.Description"),
-    scope: "world",
-    config: true,
-    default: true,
-    type: Boolean
   })
   // For storing the Scene Notes data
   const uniqueID = Date.now() // Use the timestamp in order to generate a unique identifier
@@ -106,7 +85,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
 // Handle actor updates
 Hooks.on("updateActor", (actor) => {
   // Some variables
-  const actorID = actor.id
+  const actorID = actor.uuid
   const activeBeatsMenu = Object.values(ui.windows).find(windows => windows.id == "beatsmenu")
   const activeSceneNotes = Object.values(ui.windows).find(windows => windows.id == "scenenotes")
 

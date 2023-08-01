@@ -3,8 +3,8 @@
 	<div class="sidebar">
 		<div class="head">{{ localize "CofD.SceneNotes.scene" }}</div>
 		<div class="scenes">
-			{{#if activeScene}}
-				{{#each scenes as |scene key|}}
+			{{#if system.activeScene}}
+				{{#each system.scenes as |scene key|}}
 					<div class="scene" id="{{scene.id}}">{{scene.name}}</div>
 				{{/each}}
 			{{/if}}
@@ -14,25 +14,27 @@
 	</div>
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
-		{{#if activeScene}}
+		{{#if system.activeScene}}
 			<div class="header">
-				<div class="sceneTitle">{{activeSceneData.name}}</div>
+				<div class="sceneTitle">{{system.activeSceneData.name}}</div>
 				<i class="editTitle fas fa-pencil-alt" title="Edit Scene Title" id="editSceneName"></i>
 				<i class="deleteScene fas fa-trash" title="Delete Scene" id="deleteScene"></i>
 			</div>
-
+			
+			<!--
 			<div class="description sceneInfo">
 				<div class="sectionTitle">{{ localize "CofD.SceneNotes.descriptionTitle" }}</div>
 				<div class="sectionBody">
-					{{editor content=activeSceneData.formData.description target="description" button=true owner=owner editable=true}}
+					{{editor enrichedDescription target="system.description" button=true editable=true engine="prosemirror"}}
 				</div>
 			</div>
+			-->
 
 			<div class="actors sceneInfo">
 				<div class="sectionTitle">{{ localize "CofD.SceneNotes.actorsTitle" }}</div>
 				<div class="sectionBody actorsList styled">
-					{{#if actors.length}}
-						{{#each actors as |actor key|}}
+					{{#if system.actors.length}}
+						{{#each system.actors as |actor key|}}
 							<div id="{{actor.id}}" class="actor" title="{{ localize "CofD.SceneNotes.actorHover" }}">
 								<div class="actorName">
 									{{actor.name}}
@@ -53,8 +55,8 @@
 			<div class="journals sceneInfo">
 				<div class="sectionTitle">{{ localize "CofD.SceneNotes.journalsTitle" }}</div>
 				<div class="sectionBody journalsList styled">
-					{{#if journals.length}}
-						{{#each journals as |journal key|}}
+					{{#if system.journals.length}}
+						{{#each system.journals as |journal key|}}
 							<div id="{{journal.id}}" class="journal" title="{{ localize "CofD.SceneNotes.journalHover" }}">
 								<div class="journalImage">
 									<img src="{{journal.img}}"/>
@@ -75,8 +77,8 @@
 			<div class="items sceneInfo">
 				<div class="sectionTitle">{{ localize "CofD.SceneNotes.itemsTitle" }}</div>
 				<div class="sectionBody journalsList styled">
-					{{#if items.length}}
-						{{#each items as |item key|}}
+					{{#if system.items.length}}
+						{{#each system.items as |item key|}}
 							<div id="{{item.id}}" class="item" title="{{ localize "CofD.SceneNotes.itemHover" }}">
 								<div class="itemImage">
 									<img src="{{item.img}}"/>

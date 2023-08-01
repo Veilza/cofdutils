@@ -1,17 +1,34 @@
 {
-  "name": "cofdutils",
-  "title": "CofD Utilities",
+  "id": "cofdutils",
+  "title": "Chronicles of Darkness Utilities",
   "description": "Utilities and add-ons for the Chronicles of Darkness 2e system.",
-  "version": "1.1.4",
-  "minimumCoreVersion": "0.8.1",
-  "compatibleCoreVersion": "9",
-  "systems": ["mta"],
+  "version": "2.0.0",
+  "authors": [
+    {
+      "name": "Veilza",
+      "url": "https://github.com/Veilza",
+      "discord": "veilza"
+    }
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
   "esmodules": [
     "./module/cofdutils.js"
   ],
   "styles": [
     "./styles/cofdutils.css"
   ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "mta",
+        "type": "system",
+        "compatibility": {}
+      }
+    ]
+  },
   "languages": [
     {
       "lang": "en",
@@ -19,19 +36,10 @@
       "path": "lang/en.json"
     }
   ],
-  "url": "https://github.com/thalissa/cofdutils",
-  "manifest": "https://github.com/thalissa/cofdutils/releases/download/1.1.4/module.json",
-  "download": "https://github.com/thalissa/cofdutils/releases/download/1.1.4/cofdutils.zip?job=pack",
-  "changelog": "https://github.com/thalissa/cofdutils/releases/tag/1.1.4",
-  "readme": "https://github.com/thalissa/cofdutils/blob/main/README.md",
-  "license": "https://github.com/thalissa/cofdutils/blob/main/LICENSE",
-  "author": "Thalissa",
-  "authors": [
-    {
-      "name": "Thalissa",
-      "twitter": "ThalissaRemnant",
-      "discord": "Amelia#1897",
-      "ko-fi": "thalissa"
-    }
-  ]
+  "url": "https://github.com/veilza/cofdutils",
+  "manifest": "https://github.com/veilza/cofdutils/releases/latest/download/module.json",
+  "download": "https://github.com/veilza/cofdutils/releases/latest/download/cofdutils.zip?job=pack",
+  "changelog": "https://github.com/veilza/cofdutils/releases/latest/",
+  "readme": "https://github.com/veilza/cofdutils/blob/main/README.md",
+  "license": "https://github.com/veilza/cofdutils/blob/main/LICENSE"
 }

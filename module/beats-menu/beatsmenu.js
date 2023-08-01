@@ -43,14 +43,14 @@ export class BeatsMenu extends FormApplication {
       this.activePlayers.forEach(actorID => {
         if(this.isActorAlive(actorID)){
           // Get the actor's sheet
-          const player = game.actors.get(actorID)
+          const player = fromUuidSync(actorID)
           
           // Get the current number of beats by adding up the initial
           // amount and combining it with the progress overall
           const currentBeats = [{
             name: "INITIAL",
-            beats: player.data.data.beats + (5 * player.data.data.experience)
-          }].concat(player.data.data.progress)
+            beats: player.system.beats + (5 * player.system.experience)
+          }].concat(player.system.progress)
 
           // Define current number of beats via their progress
           const beats = currentBeats.reduce((acc, cur) => {
@@ -63,9 +63,9 @@ export class BeatsMenu extends FormApplication {
 
           // Push only the data we need and format it nicely for Handlebar rendering
           data.playerList.push({
-            id: player.id,
-            img: player.data.img,
-            name: player.data.name,
+            id: player.uuid,
+            img: player.img,
+            name: player.name,
             beats: (beats % 5),
             xp: Math.floor(beats / 5)
           })
@@ -78,6 +78,7 @@ export class BeatsMenu extends FormApplication {
 
   // When the form is updated, re-render the template
   _updateObject(event, formData) {
+    console.log("Sheet re-rendered.")
     this.render()
   }
 
@@ -107,7 +108,7 @@ export class BeatsMenu extends FormApplication {
 
 
     if (data.type == 'Actor') {
-      this.addActor(data.id)
+      this.addActor(data.uuid)
     }
   }
 
@@ -216,7 +217,7 @@ export class BeatsMenu extends FormApplication {
        },
        default: "cancel"
       })
-
+      
       // Render the dialogue
       d.render(true)
     }
@@ -245,8 +246,8 @@ export class BeatsMenu extends FormApplication {
             // cause an error
             if(this.isActorAlive(actorID)){
               // Define variables for updating the beats
-              const playerSheet = game.actors.get(actorID)
-              let progress = playerSheet.data.data.progress ? duplicate(playerSheet.data.data.progress) : []
+              const playerSheet = fromUuidSync(actorID)
+              let progress = playerSheet.system.progress ? duplicate(playerSheet.system.progress) : []
  
               // Push new data to the current
               progress.push({
@@ -257,11 +258,11 @@ export class BeatsMenu extends FormApplication {
  
               // Update the progress data with the new information
               playerSheet.update({
-                'data.progress': progress
+                'system.progress': progress
               })
 
               // Add each actor's name to the chat message
-              msg += `${game.actors.get(actorID).data.name}, `
+              msg += `${fromUuidSync(actorID).name}, `
             }
           })
 
@@ -325,8 +326,8 @@ export class BeatsMenu extends FormApplication {
     _givePlayerBeats(player) {
       // Get ID of the player clicked
       const actorID = player.currentTarget.id
-      const actor = game.actors.get(actorID)
-      const actorName = actor.data.name
+      const actor = fromUuidSync(actorID)
+      const actorName = actor.name
 
       // Generate a new dialogue to input the number of beats
       let d = new Dialog({
@@ -354,8 +355,8 @@ export class BeatsMenu extends FormApplication {
              const newBeatsReason = html.find('#newBeatsReason')[0].value || game.i18n.localize("CofD.BeatsMenu.newBeatsDefaultReason")
 
              // Define actor variables
-             const actor = game.actors.get(actorID)
-             let progress = actor.data.data.progress ? duplicate(actor.data.data.progress) : []
+             const actor = fromUuidSync(actorID)
+             let progress = actor.system.progress ? duplicate(actor.system.progress) : []
 
              // Push new data to the current
              progress.push({
@@ -366,7 +367,7 @@ export class BeatsMenu extends FormApplication {
 
              // Update the progress data with the new information
              actor.update({
-               'data.progress': progress
+               'system.progress': progress
              })
 
              // Define the chat message to output
@@ -396,7 +397,7 @@ export class BeatsMenu extends FormApplication {
     // Add a new actor to the active players list
     addActor(actorID) {
       // Define the actor data
-      const actor = game.actors.get(actorID)
+      const actor = fromUuidSync(actorID)
 
       // Check if the actor is unique in the already existing list;
       // Returns true if it's found, or false if it's not found
@@ -418,7 +419,7 @@ export class BeatsMenu extends FormApplication {
 
     // Checks if the actors still exist; if they were deleted, then remove them from the list
     isActorAlive(actorID){
-      const actor = game.actors.get(actorID)
+      const actor = fromUuidSync(actorID)
 
       // If the actor is dead, update the variables
       if(actor){

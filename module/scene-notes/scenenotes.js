@@ -23,38 +23,46 @@ export class SceneNotes extends FormApplication {
   constructor() {
     super()
 
-    this.data = game.settings.get("cofdutils", "scenenotes-data")
+    this.system = game.settings.get("cofdutils", "scenenotes-data")
     this.activeScene = game.settings.get("cofdutils", "scenenotes-activescene")
   }
 
   // Send data to the template
-  getData() {
-    if(this.activeScene && this.data.scenes.find(scene => scene.id == this.activeScene)){
-      const scene = this.data.scenes.find(scene => scene.id == this.activeScene)
+  async getData(options) {
+    const context = super.getData(options)
 
-      const data = {
+    if(this.activeScene && this.system.scenes.find(scene => scene.id == this.activeScene)){
+      // Find the active scene and set it so that its data is easy to access
+      const scene = this.system.scenes.find(scene => scene.id == this.activeScene)
+
+      // Define all the readable data for the page under here
+      context.system = {
         activeScene: this.activeScene,
-        scenes: this.data.scenes,
+        scenes: this.system.scenes,
         actors: [],
         journals: [],
         items: [],
-        activeSceneData: this.data.scenes.find(scene => scene.id == this.activeScene)
+        activeSceneData: this.system.scenes.find(scene => scene.id == this.activeScene),
+        description: scene.description
       }
+
+      context.enrichedDescription = await TextEditor.enrichHTML(scene.description, {async: true})
 
       // Re-render the actor's data each time the data is called for
       if(scene.actors){
         scene.actors.forEach(actorID => {
           // Get the actor's sheet
-          if(game.actors.get(actorID)){
-            const player = game.actors.get(actorID)
+          if(fromUuidSync(actorID)){
+            const player = fromUuidSync(actorID)
 
             // Push only the data we need and format it nicely for Handlebar rendering
-            data.actors.push({
-              id: player.id,
-              img: player.data.img,
-              name: player.data.name
+            context.system.actors.push({
+              id: player.uuid,
+              img: player.img,
+              name: player.name
             })
           } else {
+            // Remove the actor if it doesn't exist
             this._removeActor({ currentTarget: { id: actorID } })
           }
         })
@@ -64,16 +72,17 @@ export class SceneNotes extends FormApplication {
       if(scene.journals){
         scene.journals.forEach(journalID => {
           // Get the actor's sheet
-          if(game.journal.get(journalID)){
-            const journal = game.journal.get(journalID)
+          if(fromUuidSync(journalID)){
+            const journal = fromUuidSync(journalID)
   
             // Push only the data we need and format it nicely for Handlebar rendering
-            data.journals.push({
-              id: journal.id,
+            context.system.journals.push({
+              id: journal.uuid,
               img: "/icons/svg/book.svg",
-              name: journal.data.name
+              name: journal.name
             })
           } else {
+            // Remove the journal if it doesn't exist
             this._removeJournal({ currentTarget: { id: journalID } })
           }
         })
@@ -83,40 +92,46 @@ export class SceneNotes extends FormApplication {
       if(scene.items){
         scene.items.forEach(itemID => {
           // Get the actor's sheet
-          if(game.items.get(itemID)){
-            const item = game.items.get(itemID)
+          if(fromUuidSync(itemID)){
+            const item = fromUuidSync(itemID)
   
             // Push only the data we need and format it nicely for Handlebar rendering
-            data.items.push({
-              id: item.id,
-              img: item.data.img,
-              name: item.data.name
+            context.system.items.push({
+              id: item.uuid,
+              img: item.img,
+              name: item.name
             })
           } else {
+            // Remove the item if it doesn't exist
             this._removeItem({ currentTarget: { id: itemID } })
           }
         })
       }
 
-      return data
+      return context
     } else {
-      const data = {
+      context.system = {
         activeScene: null,
         scenes: [],
         actors: [],
         journals: [],
         items: [],
-        activeSceneData: {}
+        activeSceneData: []
       }
 
-      return data
+      return context
     }
   }
 
-  // When the form is updated, re-render the template
-  _updateObject(event, formData) {
-    this.updateData({ formData: formData })
+  _getSubmitData(updateData) {
+    const formData = foundry.utils.expandObject(super._getSubmitData(updateData))
 
+    this.updateData({ description: formData.system.description })
+
+    return formData
+  }
+
+  async _updateObject(event, formData){
     return formData
   }
 
@@ -151,9 +166,9 @@ export class SceneNotes extends FormApplication {
 
     if (data.type == 'Actor') {
       // Data variables
-      const newActor = data.id
-      const sceneIndex = this.data.scenes.findIndex(scene => scene.id == this.activeScene)
-      let actorData = this.data.scenes[sceneIndex].actors
+      const newActor = data.uuid
+      const sceneIndex = this.system.scenes.findIndex(scene => scene.id == this.activeScene)
+      let actorData = this.system.scenes[sceneIndex].actors
 
       // Check if the actor is already in the list
       const actorUniqueCheck = actorData.find(actor => actor == newActor)
@@ -168,10 +183,10 @@ export class SceneNotes extends FormApplication {
 
     if (data.type == 'JournalEntry') {
       // Data variables
-      const newJournal = data.id
+      const newJournal = data.uuid
 
-      const sceneIndex = this.data.scenes.findIndex(scene => scene.id == this.activeScene)
-      let journalData = this.data.scenes[sceneIndex].journals
+      const sceneIndex = this.system.scenes.findIndex(scene => scene.id == this.activeScene)
+      let journalData = this.system.scenes[sceneIndex].journals
 
       // Check if the journal is already in the list
       const journalUniqueCheck = journalData.find(journal => journal == newJournal)
@@ -186,10 +201,10 @@ export class SceneNotes extends FormApplication {
 
     if (data.type == 'Item') {
       // Data variables
-      const newItem = data.id
+      const newItem = data.uuid
 
-      const sceneIndex = this.data.scenes.findIndex(scene => scene.id == this.activeScene)
-      let itemData = this.data.scenes[sceneIndex].items
+      const sceneIndex = this.system.scenes.findIndex(scene => scene.id == this.activeScene)
+      let itemData = this.system.scenes[sceneIndex].items
 
       // Check if the item is already in the list
       const itemUniqueCheck = itemData.find(item => item == newItem)
@@ -205,7 +220,7 @@ export class SceneNotes extends FormApplication {
 
   // Alter the name of the scene
   _changeSceneName () {
-    let sceneName = this.data.scenes.find(scene => scene.id == this.activeScene).name
+    let sceneName = this.system.scenes.find(scene => scene.id == this.activeScene).name
 
     // Generate a new dialogue to change the name
     let d = new Dialog({
@@ -245,7 +260,7 @@ export class SceneNotes extends FormApplication {
 
   // Alter the name of the scene
   _deleteScene () {
-    let sceneName = this.data.scenes.find(scene => scene.id == this.activeScene).name
+    let sceneName = this.system.scenes.find(scene => scene.id == this.activeScene).name
 
     // Generate a new dialogue to change the name
     let d = new Dialog({
@@ -264,15 +279,15 @@ export class SceneNotes extends FormApplication {
          label: `${game.i18n.localize("CofD.confirm")}`,
          callback: () => {
            // Filter out the scene and delete it
-           this.data.scenes = this.data.scenes.filter(scene => scene.id !== this.activeScene)
-           game.settings.set("cofdutils", "scenenotes-data", this.data)
+           this.system.scenes = this.system.scenes.filter(scene => scene.id !== this.activeScene)
+           game.settings.set("cofdutils", "scenenotes-data", this.system)
 
-           if(this.data.scenes.length > 0){
+           if(this.system.scenes.length > 0){
              // if there is still at least 1 scene in the list, then swap to the first in the list
-             this.activeScene = this.data.scenes[0].id
+             this.activeScene = this.system.scenes[0].id
 
              // Update it in the settings
-             game.settings.set("cofdutils", "scenenotes-activescene", this.data.scenes[0].id)
+             game.settings.set("cofdutils", "scenenotes-activescene", this.system.scenes[0].id)
            } else {
              // Otherwise, there is no scene to swap to, and set it to null
              this.activeScene = null
@@ -302,7 +317,7 @@ export class SceneNotes extends FormApplication {
     const actorID = event.currentTarget.id
 
     // Open the sheet with the relevant ID
-    game.actors.get(actorID).sheet.render(true)
+    fromUuidSync(actorID).sheet.render(true)
   }
 
   // Remove an actor from a scene's list
@@ -310,7 +325,7 @@ export class SceneNotes extends FormApplication {
     const actorID = event.currentTarget.id
 
     // Find the actors list for the current scene
-    const sceneActors = this.data.scenes.find(scene => scene.id == this.activeScene).actors
+    const sceneActors = this.system.scenes.find(scene => scene.id == this.activeScene).actors
 
     // Filter out the item with the ID, and then update the list
     this.updateData({ actors: sceneActors.filter((actor) => actor !== actorID) })
@@ -322,7 +337,7 @@ export class SceneNotes extends FormApplication {
     const journalID = event.currentTarget.id
 
     // Open the sheet with the relevant ID
-    game.journal.get(journalID).sheet.render(true)
+    fromUuidSync(journalID).sheet.render(true)
   }
 
   // Remove a journal from a scene's list
@@ -330,7 +345,7 @@ export class SceneNotes extends FormApplication {
     const journalID = event.currentTarget.id
 
     // Find the journals list for the current scene
-    const sceneJournals = this.data.scenes.find(scene => scene.id == this.activeScene).journals
+    const sceneJournals = this.system.scenes.find(scene => scene.id == this.activeScene).journals
 
     // Filter out the journal with the ID, and then update the list
     this.updateData({ journals: sceneJournals.filter((journal) => journal !== journalID) })
@@ -342,7 +357,7 @@ export class SceneNotes extends FormApplication {
     const itemID = event.currentTarget.id
 
     // Open the sheet with the relevant ID
-    game.items.get(itemID).sheet.render(true)
+    fromUuidSync(itemID).sheet.render(true)
   }
 
   // Remove a journal from a scene's list
@@ -351,7 +366,7 @@ export class SceneNotes extends FormApplication {
     const itemID = event.currentTarget.id
 
     // Find the items list for the current scene
-    const sceneItems = this.data.scenes.find(scene => scene.id == this.activeScene).items
+    const sceneItems = this.system.scenes.find(scene => scene.id == this.activeScene).items
 
     // Filter out the item with the ID, and then update the list
     this.updateData({ items: sceneItems.filter((item) => item !== itemID) })
@@ -369,9 +384,9 @@ export class SceneNotes extends FormApplication {
       formData: {}
     }
 
-    this.data.scenes.push(newScene)
+    this.system.scenes.push(newScene)
 
-    game.settings.set("cofdutils", "scenenotes-data", this.data)
+    game.settings.set("cofdutils", "scenenotes-data", this.system)
     game.settings.set("cofdutils", "scenenotes-activescene", `${uniqueID}`)
     this.activeScene = `${uniqueID}`
 
@@ -389,10 +404,10 @@ export class SceneNotes extends FormApplication {
 
   updateData(newData) {
     // Get the currently active scene
-    const sceneIndex = this.data.scenes.findIndex(scene => scene.id == this.activeScene)
+    const sceneIndex = this.system.scenes.findIndex(scene => scene.id == this.activeScene)
 
     // Grab the data from that scene
-    const sceneData = this.data.scenes[sceneIndex]
+    const sceneData = this.system.scenes[sceneIndex]
 
     // Loop through properties and add in new data
     for(let property in newData) {
@@ -402,7 +417,7 @@ export class SceneNotes extends FormApplication {
     }
 
     // Update it in the settings
-    game.settings.set("cofdutils", "scenenotes-data", this.data)
+    game.settings.set("cofdutils", "scenenotes-data", this.system)
 
     this.render()
   }
