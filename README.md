@@ -1,4 +1,8 @@
 ## Chronicles of Darkness Utilities
+[![Supported Foundry Versions](https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fversion%3Fstyle%3Dplastic%26url%3Dhttps%3A%2F%2Fgithub.com%2Fveilza%2Fcofdutils%2Freleases%2Flatest%2Fdownload%2Fmodule.json)](https://github.com/veilza/cofdutils)
+[![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Fcofdutils&colorB=4aa94a)](https://forge-vtt.com/bazaar#package=cofdutils)
+[![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Fcofdutils%2Fshield%2Fendorsements)](https://www.foundryvtt-hub.com/package/cofdutils/)
+
 Utilities and add-ons for the [Chronicles of Darkness 2e](https://gitlab.com/MarlQ/mta) system.
 
 ### Contributors
