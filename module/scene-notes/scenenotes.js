@@ -6,7 +6,7 @@ export class SceneNotes extends FormApplication {
       title: "Scene Notes",
       id: "scenenotes",
       template: "modules/cofdutils/templates/scenenotes.hbs",
-      width: 800,
+      width: 920,
       height: 555,
       resizable: true,
       minimizable: true,
@@ -42,8 +42,7 @@ export class SceneNotes extends FormApplication {
         actors: [],
         journals: [],
         items: [],
-        activeSceneData: this.system.scenes.find(scene => scene.id == this.activeScene),
-        description: scene.description
+        activeSceneData: this.system.scenes.find(scene => scene.id == this.activeScene)
       }
 
       context.enrichedDescription = await TextEditor.enrichHTML(scene.description, {async: true})

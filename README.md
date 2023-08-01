@@ -5,6 +5,9 @@ Utilities and add-ons for the [Chronicles of Darkness 2e](https://gitlab.com/Mar
 * Originally maintained by [Thalissa](https://github.com/thalissa)
 
 ### Changelog
+#### 2.0.1
+* Fixed the scene description box inside the Scene Notes.
+
 #### 2.0.0
 * Update to be compatible with Version 11 of Foundry
 * Transfer of ownership from [Thalissa](https://github.com/thalissa) to [Veilza](https://github.com/veilza)
