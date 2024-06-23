@@ -1,3 +1,6 @@
+#### 2.1.0
+* Confirmed compatibility with V12
+
 #### 2.0.1
 * Fixed the scene description box inside the Scene Notes.
 
