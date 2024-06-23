@@ -23,7 +23,7 @@
                     customHeaders: '{"Authorization": "${{ secrets.FOUNDRY_API_TOKEN }}"}'
                     data: 
                         '{
-                            "id": "cofdutils",
+                            "id": "cofdutilities",
                             "release": {
                                 "version": "${{ github.event.release.tag_name }}",
                                 "manifest": "https://github.com/veilza/cofdutils/releases/download/${{ github.event.release.tag_name }}/module.json",
