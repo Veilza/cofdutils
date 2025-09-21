@@ -54,32 +54,25 @@ Hooks.on("ready", () => {
 
 // Generate the button(s)
 Hooks.on("getSceneControlButtons", (controls) => {
-  // Simple way to locate the token controls
-  let tokenControls = controls.find(c => c.name === "token" )
-
-  // Push the button to the token controls
-  if(tokenControls && tokenControls.hasOwnProperty('tools')){
-    tokenControls.tools.push(
-      // Beats Menu button
-      {
-        name: "beats",
-        title: game.i18n.localize("CofD.BeatsMenu.alias"),
-        icon: "fas fa-user-edit",
-        button: true,
-        visible: game.user.isGM, // Only show this button to the GM
-        onClick: () => new BeatsMenu().render(true) // Function to show the Beats Menu application
-      },
-      // Scene Notes button
-      {
-        name: "scenes",
-        title: game.i18n.localize("CofD.SceneNotes.alias"),
-        icon: "fas fa-book",
-        button: true,
-        visible: game.user.isGM, // Only show this button to the GM
-        onClick: () => new SceneNotes().render(true) // Function to show the Scene Notes application
-      }
-    )
+  controls.tokens.tools.beatsmenu = {
+    name: "beatsmenu",
+    button: true,
+    title: game.i18n.localize("CofD.BeatsMenu.alias"),
+    icon: "fas fa-user-edit",
+    visible: game.user.isGM, // Only show this button to the GM
+    onChange: () => new BeatsMenu().render(true) // Function to show the Beats Menu application
   }
+
+  controls.tokens.tools.scenenotes = {
+    name: "scenenotes",
+    button: true,
+    title: game.i18n.localize("CofD.SceneNotes.alias"),
+    icon: "fas fa-book",
+    visible: game.user.isGM, // Only show this button to the GM
+    onChange: () => new SceneNotes().render(true) // Function to show the Scene Notes application
+  }
+
+  return controls
 })
 
 // Handle actor updates
