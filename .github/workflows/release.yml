@@ -29,8 +29,8 @@
                                 "manifest": "https://github.com/veilza/cofdutils/releases/download/${{ github.event.release.tag_name }}/module.json",
                                 "notes": "https://github.com/veilza/cofdutils/releases/tag/${{ github.event.release.tag_name }}",
                                 "compatibility": {
-                                    "minimum": "11",
-                                    "verified": "12.327",
+                                    "minimum": "13",
+                                    "verified": "13.348",
                                     "maximum": ""
                                 }
                             }
